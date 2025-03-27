@@ -1,0 +1,131 @@
+@font-face {
+    font-family: "Kanit";
+    src: url("./Kanit/Kanit-Regular.ttf");
+}
+
+body {//เปลี่ยนสีพื้นหลังหน้าเว็บ
+    font-family: "Kanit";
+    background: url("1.png");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    font-family: "Kanit";
+    width: 100%;
+    max-width: 600px;
+    background:linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url("w3.jpg");
+    background-size: cover;
+    padding:50px;
+    border-radius: 12px;
+    border-box: border-box;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid #A7C7E7;
+    color:white;
+}
+
+.header {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color:rgb(255, 255, 255);
+}
+.header-form {
+    width: 110px;
+}
+.flex {
+display: flex;
+}
+.form-input {
+    margin-bottom: 10px;
+}
+
+.center {
+text-align: center;
+}
+input.form, textarea {//เงาหลังกรอบข้อความ
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #A7C7E7;
+    border-radius: 6px;
+    font-size: 16px;
+    background:rgba(229, 192, 213, 0.85) ;
+    transition: 0.3s;
+}
+
+
+input.form, textarea {//คำอธิบาย
+    border-color:rgb(214, 44, 177);
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(211, 104, 166, 0.85);
+    border: 1px solid #ccc;
+    width:97%;
+
+}
+input.form:hover, textarea:hover{
+    background:rgb(253, 236, 247);
+    cursor: pointer;
+
+}
+
+
+.button {//ส่งข้อความ
+    padding: 12px;
+    background:rgb(84, 191, 218);
+    border: 1px;
+    color: white;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 40%;
+    height: 50px;
+   
+}
+.button{
+    font-family: "Kanit";
+}
+
+
+
+.button:hover {
+    background:rgb(18, 221, 167);
+}
+.center .button {
+    margin-top: 20px; /* เพิ่มระยะห่าง 20px ระหว่างปุ่ม */
+}
+.message {
+    margin-buttom: 20px;
+    display: none;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.message.success {
+    display: block;
+    background-color: lightgreen;
+}
+
+.message.danger {
+    display: block;
+    background-color: red;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .
+    .container {
+        padding: 15px;
+    }
+    .header {
+        font-size: 24px;
+    }
+    .button {
+        font-size: 16px;
+    }
+}
