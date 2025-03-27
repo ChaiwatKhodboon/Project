@@ -60,10 +60,10 @@ const validateData = (documentData) => {
   if (!documentData.gender) {
     errors.push('กรุณาเลือกเพศ');
   }
-  if (documentData.interests.length === 0) {
+  if (documentData.document.length === 0) {
     errors.push('กรุณาเลือกความสนใจ');
   }
-  if (!documentData.description) {
+  if (!documentData.note) {
     errors.push('กรุณากรอกคำอธิบาย');
   }
   return errors;
@@ -74,14 +74,14 @@ const submitData = async () => {
   let lastNameDOM = document.querySelector('input[name=lastname]');
   let ageDOM = document.querySelector('input[name=age]');
   let genderDOM = document.querySelector('input[name=gender]:checked');
-  let interestDOMs = document.querySelectorAll('input[name=interest]:checked');
-  let descriptionDOM = document.querySelector('textarea[name=description]');
+  let interestDOMs = document.querySelectorAll('input[name=document]:checked');
+  let descriptionDOM = document.querySelector('textarea[name=note]');
   let messageDOM = document.getElementById('message');
 
   try {
       // ดึงข้อมูลจากฟอร์ม
       let gender = genderDOM ? genderDOM.value : '';  // เช็คว่าเลือก gender หรือไม่
-      let interest = interestDOMs ? Array.from(interestDOMs).map(i => i.value).join(', ') : '';
+      let interests = interestDOMs ? Array.from(interestDOMs).map(i => i.value) : []; // แก้ไขเป็น Array
 
       let documentData = {
           firstName: firstNameDOM.value,
@@ -89,7 +89,7 @@ const submitData = async () => {
           age: ageDOM.value,
           gender: gender,  // ส่งค่า gender ที่เลือก
           description: descriptionDOM.value,
-          interests: interest
+          interests: interests // ส่งค่าความสนใจที่เลือก
       };
 
       console.log('submitData', documentData);
@@ -101,7 +101,7 @@ const submitData = async () => {
       }
 
       let message = 'บันทึกข้อมูลเรียบร้อยแล้ว';
-      if (mode == 'CREATE') {
+      if (mode === 'CREATE') {
           const response = await axios.post(`${BASE_URL}/documents`, documentData);
           console.log('response', response.data);
       } else {

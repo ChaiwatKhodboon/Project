@@ -1,19 +1,25 @@
-const BASE_URL = 'http://localhost:8000'
+const BASE_URL = 'http://localhost:8000';
+
 window.onload = async () => {
-  await loadData()
-}
+  // เรียกใช้ฟังก์ชัน loadData เมื่อลงหน้าหมายเลข
+  await loadData();
+};
 
 const loadData = async () => {
-  console.log('users page loaded')
+  console.log('documents page loaded');
+
   //1. load user ทั้งหมด จาก api ที่เตรียมไว้
-  const response = await axios.get(`${BASE_URL}/users`)
+  const response = await axios.get(`${BASE_URL}/documents`);
+  console.log(response.data);
 
-  console.log(response.data)
+  const documentsDOM = document.getElementById('documents');
+  if (!documentsDOM) {
+    console.log('ไม่พบ div ที่มี id="documents"');
+    return;
+  }
 
-  const usersDOM = document.getElementById('users')
   //2. นำ user ทั้งหมด โหลดกลับเข้าไปใน html
- 
-  //สร้างตารางเพื่อแสดงข้อมูล users
+  //สร้างตารางเพื่อแสดงข้อมูล 
   let htmlData = `
   <table border="1" cellspacing="1" cellpadding="10">
       <thead>
@@ -31,20 +37,21 @@ const loadData = async () => {
       <tbody>
   `;
 
+  // แสดงข้อมูลทั้งหมดจาก API
   for (let i = 0; i < response.data.length; i++) {
-    let users = response.data[i];
+    let document = response.data[i];
     htmlData += `
       <tr>
-          <td>${users.id}</td>
-          <td>${users.firstname}</td>
-          <td>${users.lastname}</td>
-          <td>${users.age}</td>
-          <td>${users.gender}</td>
-          <td>${users.interests || '-'}</td>
-          <td>${users.description || '-'}</td>
+          <td>${document.id}</td>
+          <td>${document.firstName}</td>
+          <td>${document.lastName}</td>
+          <td>${document.age}</td>
+          <td>${document.gender}</td>
+          <td>${document.interests || '-'}</td>
+          <td>${document.description || '-'}</td>
           <td>
-          <a href="index.html?id=${users.id}"><button class='Edit'>Edit</button></a>
-          <button class="delete" data-id="${users.id}">Delete</button>
+              <a href="index.html?id=${document.id}"><button class='Edit'>Edit</button></a>
+              <button class="delete" data-id="${document.id}">Delete</button>
           </td>
       </tr>
     `;
@@ -54,19 +61,22 @@ const loadData = async () => {
             </tbody>
         </table>
     `;
-    usersDOM.innerHTML = htmlData;
 
-  //3. สร้าง event สำหรับลบ users
-  const deletDOMs = document.getElementsByClassName('delete')
-  for (let i = 0; i < deletDOMs.length; i++) {
-    deletDOMs[i].addEventListener('click', async (event) => {
-      const id = event.target.dataset.id
+  // นำข้อมูลที่สร้างไว้มาแสดงใน DOM
+  documentsDOM.innerHTML = htmlData;
+
+  //3. สร้าง event สำหรับลบข้อมูล 
+  const deleteDOMs = document.getElementsByClassName('delete');
+  for (let i = 0; i < deleteDOMs.length; i++) {
+    deleteDOMs[i].addEventListener('click', async (event) => {
+      const id = event.target.dataset.id;
       try {
-        await axios.delete(`${BASE_URL}/users/${id}`)
-        loadData()//เรียกใช้ฟังก์ชั่นตัวเองเพื่อโหลดข้อมูลใหม่
+        // ส่งคำขอลบข้อมูลจาก API
+        await axios.delete(`${BASE_URL}/documents/${id}`);
+        loadData(); // เรียกใช้ฟังก์ชันตัวเองเพื่อโหลดข้อมูลใหม่
       } catch (error) {
-        console.log('error', error)
+        console.log('Error deleting document:', error);
       }
-    })
+    });
   }
-}
+};
